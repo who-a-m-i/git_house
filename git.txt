@@ -1,0 +1,156 @@
+git 学习
+
+1.下载git
+2.配置git
+
+mkdir git_warehouse  #创建git仓库(建议使用空目录)
+git init
+git config --global user.name "whoami"
+git config --global user.email "whoami@example.com"
+git config --global push.default matching  #设置push.default。[matching|simple[旧版]|current]
+
+
+
+3.添加文件到git中
+
+echo 111 > file1
+git add  file                        #把内容提交到暂存区中
+git commit -m "add 1 file"       #把暂存区的所有内容提交到分支上面去
+
+-m 是给提交添加说明
+
+
+4.查看git状态
+
+在file1文本中加入222
+git diff file1 #在未保存的时候来查看file1与之前的不同之处
+git status #查看状态
+
+
+5.查看日志
+git log 
+git log --pretty=oneline #显示的内容少而简洁
+
+
+$ git log --pretty=oneline
+3628164fb26d48395383f8f31179f24e0882e1e0 append GPL
+ea34578d5496d7dd233c827ed32a8cd576c5ee85 add distributed
+cb926e7ea50ad11b8f9e909c05226233bf755030 wrote a readme file
+
+需要友情提示的是，你看到的一大串类似3628164...882e1e0的是commit id（版本号），和SVN不一样，Git的commit id不是1，2，3……递增的数字，
+而是一个SHA1计算出来的一个非常大的数字，用十六进制表示，而且你看到的commit id和我的肯定不一样，以你自己的为准。
+为什么commit id需要用这么一大串数字表示呢？因为Git是分布式的版本控制系统，后面我们还要研究多人在同一个版本库里工作，如果大家都用1，2，3……作为版本号，那肯定就冲突了。
+
+
+
+6.时光穿梭机(回退到之前的某个版本)
+
+git reset --hard HEAD^
+
+HEAD     表示当前版本
+HEAD^    表示往上一个版本
+HEAD^^    表示往上两个版本
+HEAD~100 表示往上100个版本
+
+
+当回退到上一个版本的时候，当前版本即消失，但可通过commit ID 再回退回来
+git reset --hard 141409846     根据版本号来进行任意版本之间的切换
+
+数字为commit ID 可以不写全，git会自动寻找。
+
+git reflog #记录了每次操作命令，并包括了commit ID，再回退到旧版本的时候，可以根据这个命令来查看之前最新版本的commit ID号来进行版本回退
+
+
+7.查看工作区和版本库中的区别
+
+git diff HEAD -- readme.txt
+
+HEAD 表示当前版本
+注：如果使用git add命令之后，又对该文本进行修改，需要再次使用git add，否则直接使用git commit 的话，只会保存第一次git add的操作
+
+
+为什么Git比其他版本控制系统设计得优秀，因为Git跟踪并管理的是修改，而非文件。
+比如你新增了一行，这就是一个修改，删除了一行，也是一个修改，更改了某些字符，也是一个修改，删了一些又加了一些，也是一个修改，甚至创建一个新文件，也算一个修改。
+
+
+8.丢弃工作区的修改
+
+场景1：git checkout -- readme.txt  #把在工作区的文本的修改全部撤销
+
+场景2：git reset HEAD readme.txt  #把暂存区的文本的修改撤销，并回到场景1
+       git checkout -- readme.txt 
+
+场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
+
+场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。
+
+场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。
+
+
+
+9.删除文件
+
+git rm test.txt
+git commit -m "remove test.txt"
+
+git checkout -- test.txt   #在工作区的时候可以用此命令撤销此次操作
+
+
+git reset HEAD test.txt #回退到当时的版本号
+git checkout -- test.txt
+
+
+10.添加远程仓库
+
+ssh-keygen -t rsa -C "seamlessone@163.com"  #在本地机器上创建秘钥
+
+手动复制公钥id_rsa.pub 到github上
+
+github:
+setting -->SSH and GPG keys --> New SSH key --> 输入秘钥的名称和公钥的内容
+
+git remote add origin git@github.com/who-a-m-i/git_house  #把本地库与github进行关联，把本地仓库的内容推送到github上
+
+第一次连接使用命令：
+git push -u origin master (如果报错则使用下面两条命令)
+git push -f
+git pull
+
+由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，
+还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
+
+后面直接使用此命令进行提交到远程仓库上：
+git push origin master
+
+
+11.克隆远程仓库
+
+在github上创建一个仓库
+
+git clone git@github.com:/who-a-m-i/git_2017  #克隆远程仓库(使用ssh协议速度更快)
+
+git clone https://github.com:/who-a-m-i/git_2017  #也可以使用https开头的地址来克隆(不建议使用)
+
+
+
+12.分支管理
+
+查看分支：git branch
+
+创建分支：git branch <name>
+
+切换分支：git checkout <name>
+
+创建+切换分支：git checkout -b <name>
+
+合并某分支到当前分支：git merge <name>
+
+删除分支：git branch -d <name>
+
+
+
+
+
+
+
+
