@@ -1,0 +1,544 @@
+【基本数据类型】
+除数：
+>>> divmod(5,2)  #表示5除以2，返回了商和余数
+(2, 1)
+>>> divmod(9,2)
+(4, 1)
+>>> divmod(5.0,2)
+(2.0, 1.0)
+
+>>> round(1.234567,2) #表示四舍五入，取小数点后两位
+1.23
+>>> round(1.234567,3)
+1.235
+>>> round(10.0/3,4)
+3.3333
+
+>>> abs(10)  #求绝对值
+10
+>>> abs(-10)
+10
+>>> abs(-1.2)
+1.2
+
+>> a = 100
+>> b = "free"
+>>> print b + repr(a)   #repr(a)与上面的`a`类似
+free100 
+
+
+>>> dos = r"c:\news"  #不产生换行
+>>> print dos
+c:\news
+>>> print r"c:\news\python"
+c:\news\python
+
+
+“+”连接字符串
+>>> str1 + str2
+'abcdabcde'
+>>> str1 + "-->" + str2
+'abcd-->abcde'
+
+
+in
+>>> "a" in str1
+True
+>>> "de" in str1
+False
+>>> "de" in str2
+True
+
+
+最值
+>>> max(str1)
+'d'
+>>> max(str2)
+'e'
+>>> min(str1)
+'a'
+
+
+比较
+>>> cmp(str1, str2)  # $1 > $2 返回1； $2 > $1 返回 -1 ； $1 = $2 返回 0 。
+-1
+
+
+>>> cmp("123","23") #字符串会先比较前面。小于直接返回结果
+-1
+>>> cmp(123,23)    #也可以比较整数，这时候就是整数的直接比较了。
+1
+
+>>> ord('a')
+97
+>>> ord('b')
+98
+>>> ord(' ')
+32
+
+>>> chr(97)
+'a'
+>>> chr(98)
+'b'
+
+
+# 字符串格式化
+第一种
+>>> "I like %s" % "python"
+'I like python'
+
+>>> a = "%d years" % 15
+>>> print a
+15 years
+
+>>> print "Today's temperature is %.2f" % 12.235  #截取小数点后两位
+Today's temperature is 12.23
+
+>>> print "Today's temperature is %+.2f" % 12.235
+Today's temperature is +12.23
+
+第二种[推荐使用]
+>>> s1 = "I like {}".format("python")
+>>> s1
+'I like python'
+>>> s2 = "Suzhou is more than {} years. {} lives in here.".format(2500, "lin") 
+>>> s2
+'Suzhou is more than 2500 years. lin lives in here.'
+
+>>> print "Suzhou is more than {year} years. {name} lives in here.".format(year=2500, name="lin") 
+Suzhou is more than 2500 years. lin lives in here.
+
+第三种
+>>> lang = "python"
+>>> print "I love %(program)s"%{"program":lang}
+I love python
+
+
+
+>>> "python".isalpha()    #字符串全是字母，应该返回True
+True
+>>> "2python".isalpha()    #字符串含非字母，返回False
+False
+
+>>> a = "I LOVE PYTHON" #分割
+>>> a.split(" ")
+['I', 'LOVE', 'PYTHON']
+
+>>> b = "www.google.com"
+>>> b.split(".")
+['www', 'google', 'com']
+
+
+S.strip() 去掉字符串的左右空格
+S.lstrip() 去掉字符串的左边空格
+S.rstrip() 去掉字符串的右边空格
+
+>>> b=" hello "    #两边有空格
+>>> b.strip()
+'hello'
+>>> b
+' hello '
+
+>>> b.lstrip()    #去掉左边的空格
+'hello '
+
+>>> b.rstrip()    #去掉右边的空格
+' hello'
+
+
+S.upper() #S中的字母大写
+S.lower() #S中的字母小写
+S.capitalize() #首字母大写
+S.isupper() #S中的字母是否全是大写
+S.islower() #S中的字母是否全是小写
+S.istitle() #判断每个单词的首字母是否为大写
+
+>>> a = "study python"
+>>> b = "STUDY PYTHON"
+
+>>> a.upper()      #将字符串转换为小写
+'STUDY PYTHON'
+>>> b.lower()      #将字符串转换为小写
+'study python'
+>>> a.capitalize() #将字符串首字母大写
+'Study python'
+
+>>> a.islower()  #判断字符串是否全部为小写
+True
+>>> b.isupper()  #判断字符串是否全部为大写
+True
+
+>>> a = "This is a Book"
+>>> a.istitle()
+False
+>>> b = a.title()     #这样就把所有单词的第一个字母转化为大写
+>>> b
+'This Is A Book'
+>>> b.istitle()       #判断每个单词的第一个字母是否为大写
+True
+
+
+join[拼接]
+
+>>> k = "www.google.com"
+>>> l = k.split(".")
+>>> l
+['www', 'google', 'com']
+>>> ".".join(l)
+'www.google.com'
+>>> "*".join(l)
+'www*google*com'
+
+
+split
+
+>>> s = "I am, writing\npython\tbook on line"
+>>> s
+'I am, writing\npython\tbook on line'
+>>> print s
+I am, writing
+python  book on line
+>>> s.split()
+['I', 'am,', 'writing', 'python', 'book', 'on', 'line']
+
+
+
+tuple
+
+>>> a =(3)
+>>> type(a)
+<type 'int'>
+>>>
+>>>
+>>> b=(3,)
+>>> type(b)
+<type 'tuple'>
+
+
+
+dict（字典）
+len(d)，返回字典(d)中的键值对的数量
+d[key]，返回字典(d)中的键(key)的值
+d[key]=value，将值(value)赋给字典(d)中的键(key)
+del d[key]，删除字典(d)的键(key)项（将该键值对删除）
+key in d，检查字典(d)中是否含有键为key的项
+
+
+>>> city_code = {"suzhou":"0512", "tangshan":"0315", "hangzhou":"0571"}
+>>> " Suzhou is a beautiful city, its area code is %(suzhou)s" % city_code
+' Suzhou is a beautiful city, its area code is 0512'
+
+
+>>> temp = "<html><head><title>%(lang)s<title><body><p>My name is %(name)s.</p></body></head></html>"
+>>> my = {"name":"lin", "lang":"python"}
+>>> temp % my
+'<html><head><title>python<title><body><p>My name is lin.</p></body></head></html>'
+
+
+copy（字典中，使用copy时，列表在内存中的地址是一样的，所以会被修改。）
+
+>>> x = {"name":"lin", "lang":["python", "java", "c"]}
+>>> y = x.copy()
+>>> y
+{'lang': ['python', 'java', 'c'], 'name': 'lin'}
+
+>>> y["lang"].remove("c")
+>>> y
+{'lang': ['python', 'java'], 'name': 'lin'}
+>>> x
+{'lang': ['python', 'java'], 'name': 'lin'}
+
+>>> y["name"] = "laoqi"
+>>> y
+{'lang': ['python', 'java'], 'name': 'lang'}
+>>> x
+{'lang': ['python', 'java'], 'name': 'lin'}
+
+>>> id(x["lang"])
+3072243276L
+>>> id(y["lang"])
+3072243276L
+
+
+深度copy（copy出来的list在内存中的地址不一样）
+
+>>> import copy
+>>> z = copy.deepcopy(x)
+>>> z
+{'lang': ['python', 'java'], 'name': 'qiwsir'}
+
+
+clear
+>>> a = {"name":"qiwsir"}
+>>> a.clear()
+>>> a
+{}
+
+del（删除字典）
+>>> del a
+
+get
+>>> d
+{'lang': 'python'}
+>>> d.get("lang")
+'python'
+
+setdefault
+>>> c.setdefault("name","lin")
+'lin'
+>>> c.setdefault("name")
+'lin'
+
+
+items
+>>> dd
+{'lang': 'python', 'web': 'www.gitlab.com', 'name': 'lin'}
+>>> dd_kv = dd.items()
+>>> dd_kv
+[('lang', 'python'), ('web', 'www.gitlab.com'), ('name', 'lin')]
+
+
+
+iteritems[可迭代](需要用list转换，才能看到内容)
+>>> dd
+{'lang': 'python', 'web': 'www.gitlab.com', 'name': 'lin'}
+>>> dd_iter = dd.iteritems()
+>>> dd_iter
+<dictionary-itemiterator object at 0x039BF270>
+>>> list(dd_iter)
+[('lang', 'python'), ('web', 'www.gitlab.com'), ('name', 'lin')]
+>>> dd.keys()
+['lang', 'web', 'name']
+>>> dd.values()
+['python', 'www.gitlab.com', 'lin']
+
+
+pop(制定key进行删除)
+>>> dd
+{'lang': 'python', 'web': 'www.itdiffer.com', 'name': 'qiwsir'}
+>>> dd.pop("name")
+'qiwsir
+
+
+popitem(随机删除)
+>>> dd
+{'lang': 'python', 'web': 'www.gitlab.com', 'name': 'lin'}
+>>> dd.popitem()
+('lang', 'python')
+>>> dd.popitem()
+('web', 'www.gitlab.com')
+>>> dd.popitem()
+('name', 'lin')
+
+
+update
+>>> d1
+{'lang': 'python'}
+>>> d2
+{'song': 'kalong'}
+>>> d1.update(d2)
+>>> d1
+{'lang': 'python', 'song': 'kalong'}
+>>> d2
+{'song': 'kalong'}
+>>> d2.update([('name','lin'),('web','gitlab')])
+>>> d2
+{'web': 'gitlab', 'name': 'lin', 'song': 'kalong'}
+
+
+has_key
+>>> d2
+{'web': 'gitlab', 'name': 'lin', 'song': 'kalong'}
+>>> d2.has_key("web")
+True
+>>> d2.has_key("gitlab")
+False
+>>> d2.has_key("name")
+True
+
+
+
+能够索引的，如list/str，其中的元素可以重复
+可变的，如list/dict，即其中的元素/键值对可以原地修改
+不可变的，如str/int，即不能进行原地修改
+无索引序列的，如dict，即其中的元素（键值对）没有排列顺序
+
+可哈希即不可变/不可哈希即可变
+
+
+set（集合）
+
+add
+
+>>> a_set = {'a','i'}  #如果直接创建 a_set = {} python会任务创建是dict而不是set
+>>> type(a_set)
+<type 'set'>
+>>> a_set.add('qiwser')
+>>> a_set
+set(['a', 'i', 'qiwser'])
+
+>>> b_set = set()
+>>> b_set
+set([])
+>>> b_set = set("python")
+>>> b_set
+set(['h', 'o', 'n', 'p', 't', 'y'])
+
+
+update
+>>> s1
+set(['a', 'b'])
+>>> s2
+set(['github', 'qiwsir'])
+>>> s1.update(s2)
+>>> s1
+set(['a', 'qiwsir', 'b', 'github'])
+>>> s2
+set(['github', 'qiwsir'])
+
+>>> s2.update("keke")
+>>> s2
+set(['k', 'github', 'e', 'qiwsir'])
+
+
+pop（任意删除一个元素。且pop不能指定元素删除）
+>>> b_set
+set([1, '[1,2,3]', 'h', 'o', 'n', 'p', 'qiwser', 't', 'y'])
+>>> b_set.pop()
+1
+>>> b_set.pop()
+'[1,2,3]'
+>>> b_set.pop()
+'h'
+>>> b_set.pop()
+'o'
+>>> b_set.pop()
+'n'
+>>> b_set
+set(['p', 'qiwser', 't', 'y'])
+
+
+remove（删除指定元素）
+>>> a_set
+set(['a', 'i', 'lin', 'qiwser'])
+>>> a_set.remove('i')
+>>> a_set
+set(['a', 'lin', 'qiwser'])
+
+
+discard（跟remove一样，指定元素删除，但如果删除的元素不存在，则什么也不操作[也不会抱错]）
+>>> a_set
+set(['a', 'lin', 'qiwser'])
+>>> a_set.discard('a')
+>>> a_set
+set(['lin', 'qiwser'])
+
+
+clear(清楚set中的所有元素)
+>>> a_set
+set(['lin', 'qiwser'])
+>>> a_set.clear()
+>>> a_set
+set([])
+
+del （删除set）
+>>> del a_set
+
+
+frozenset（创建冻结集合，即通过此参数创建的集合不可被修改）
+>>> f_set = frozenset('python')
+>>> f_set
+frozenset(['h', 'o', 'n', 'p', 't', 'y'])
+
+
+issubset(判断a是否为c的子集)
+issuperset（判断a是否为c的超集）
+>>> a
+set(['q', 'i', 's', 'r', 'w'])
+>>> c
+set(['q', 'i'])
+>>> c<a     #c是a的子集
+True
+>>> c.issubset(a)   #或者用这种方法，判断c是否是a的子集
+True
+>>> a.issuperset(c) #判断a是否是c的超集
+True
+
+>>> b
+set(['a', 'q', 'i', 'l', 'o'])
+>>> a<b     #a不是b的子集
+False
+>>> a.issubset(b)   #或者这样做
+False
+
+
+
+并集（使用“|” 或 union判断）
+>>> a
+set(['q', 'i', 's', 'r', 'e'])
+>>>
+>>> b
+set(['a', 'q', 'i', 'l', 'o'])
+>>>
+>>> c
+set(['q', 'i'])
+>>>
+>>> a | b
+set(['a', 'e', 'i', 'l', 'o', 'q', 's', 'r'])
+>>>
+>>>
+>>> a.union(b)
+set(['a', 'e', 'i', 'l', 'o', 'q', 's', 'r'])
+
+交集（使用“&”或intersection判断）
+>>> a
+set(['q', 'i', 's', 'r', 'e'])
+>>> b
+set(['a', 'q', 'i', 'l', 'o'])
+>>> c
+set(['q', 'i'])
+>>>
+>>> a&b
+set(['q', 'i'])
+>>> a.intersection(b)
+set(['q', 'i'])
+
+
+查补（使用“-” 或 difference判断）
+>>> a
+set(['q', 'i', 's', 'r', 'w'])
+>>> b
+set(['a', 'q', 'i', 'l', 'o'])
+>>> a - b
+set(['s', 'r', 'w'])
+>>> a.difference(b)
+set(['s', 'r', 'w'])
+
+
+对称差集[获取交集外的元素](使用“^”或symmetric_difference判断)
+>>> a
+set(['q', 'i', 's', 'r', 'w'])
+>>> b
+set(['a', 'q', 'i', 'l', 'o'])
+>>> a.symmetric_difference(b)
+set(['a', 'l', 'o', 's', 'r', 'w'])
+>>> a^b
+set(['a', 'l', 'o', 's', 'r', 'w'])
+
+
+
+运算符
+
+运算符	         描述	                           实例
+==	      等于 - 比较对象是否相等	              (a == b) 返回 False。
+!=	      不等于 - 比较两个对象是否不相等	      (a != b) 返回 true.
+>	      大于 - 返回x是否大于y	                  (a > b) 返回 False。
+<	      小于 - 返回x是否小于y	                  (a < b) 返回 true。
+>=	      大于等于 - 返回x是否大于等于y。	      (a >= b) 返回 False。
+<=	      小于等于 - 返回x是否小于等于y。	      (a <= b) 返回 true。
+
+
+运算符	               描述	                                                         实例
+and	        布尔"与" - 如果x为False，x and y返回False，否则它返回y的计算值。	(a and b) 返回 true。
+or	        布尔"或" - 如果x是True，它返回True，否则它返回y的计算值。	        (a or b) 返回 true。
+not	        布尔"非" - 如果x为True，返回False。如果x为False，它返回True。	    not(a and b) 返回 false。
