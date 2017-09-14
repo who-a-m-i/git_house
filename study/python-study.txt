@@ -1,4 +1,4 @@
-【基本数据类型】
+﻿【基本数据类型】
 除数：
 >>> divmod(5,2)  #表示5除以2，返回了商和余数
 (2, 1)
@@ -542,3 +542,400 @@ set(['a', 'l', 'o', 's', 'r', 'w'])
 and	        布尔"与" - 如果x为False，x and y返回False，否则它返回y的计算值。	(a and b) 返回 true。
 or	        布尔"或" - 如果x是True，它返回True，否则它返回y的计算值。	        (a or b) 返回 true。
 not	        布尔"非" - 如果x为True，返回False。如果x为False，它返回True。	    not(a and b) 返回 false。
+
+
+
+
+file
+模式	描述
+r	以读方式打开文件，可读取文件信息。
+w	以写方式打开文件，可向文件写入信息。如文件存在，则清空该文件，再写入新内容
+a	以追加模式打开文件（即一打开文件，文件指针自动移到文件末尾），如果文件不存在则创建
+r+	以读写方式打开文件，可对文件进行读和写操作。
+w+	消除文件内容，然后以读写方式打开文件。
+a+	以读写方式打开文件，并把文件指针移到文件尾。
+b	以二进制模式打开文件，而不是以文本模式。该模式只对Windows或Dos有效，类Unix的文件是用二进制模式进行操作的。
+
+
+>>> with open("130.txt","a") as f:
+...     f.write("\nThis is about 'with...as...'")
+... 
+>>> with open("130.txt","r") as f:
+...     print f.read()
+... 
+learn python
+http://qiwsir.github.io
+qiwsir@gmail.com
+hello
+
+This is about 'with...as...'
+>>> 
+
+
+read：如果指定了参数size，就按照该指定长度从文件中读取内容，否则，就读取全文。被读出来的内容，全部塞到一个字符串里面。这样有好处，就是东西都到内存里面了，随时取用，比较快捷；“成也萧何败萧何”，也是因为这点，如果文件内容太多了，内存会吃不消的。文档中已经提醒注意在“non-blocking”模式下的问题，关于这个问题，不是本节的重点，暂时不讨论。
+readline：那个可选参数size的含义同上。它则是以行为单位返回字符串，也就是每次读一行，依次循环，如果不限定size，直到最后一个返回的是空字符串，意味着到文件末尾了(EOF)。
+readlines：size同上。它返回的是以行为单位的列表，即相当于先执行readline()，得到每一行，然后把这一行的字符串作为列表中的元素塞到一个列表中，最后将此列表返回。
+
+read示例：
+>>> f = open("you.md")
+>>> content = f.read()
+>>> content
+'You Raise Me Up \nWhen I am down and, oh my soul, so weary;\nWhen troubles come and my heart burdened be; \nThen, I am still and wait here in the silence, Until you come and sit awhile with me. \nYou raise me up, so I can stand on mountains; \nYou raise me up, to walk on stormy seas; \nI am strong, when I am on your shoulders; \nYou raise me up: To more than I can be.\n'
+
+
+readline示例：(如果文件太大，选择readline)
+>>> f = open("you.md")
+>>> f.readline()
+'You Raise Me Up \n'
+>>> f.readline()
+'When I am down and, oh my soul, so weary;\n'
+>>> f.readline()
+'When troubles come and my heart burdened be; \n'
+>>> f.readline()
+'Then, I am still and wait here in the silence, Until you come and sit awhile with me. \n'
+>>> f.readline()
+'You raise me up, so I can stand on mountains; \n'
+>>> f.readline()
+'You raise me up, to walk on stormy seas; \n'
+>>> f.readline()
+'I am strong, when I am on your shoulders; \n'
+>>> f.readline()
+'You raise me up: To more than I can be.\n'
+
+
+readlines示例：
+>>> f = open("you.md")
+>>> content = f.readlines()
+>>> content
+['You Raise Me Up \n', 'When I am down and, oh my soul, so weary;\n', 'When troubles come and my heart burdened be; \n', 'Then, I am still and wait here in the silence, Until you come and sit awhile with me. \n', 'You raise me up, so I can stand on mountains; \n', 'You raise me up, to walk on stormy seas; \n', 'I am strong, when I am on your shoulders; \n', 'You raise me up: To more than I can be.\n']
+
+
+fileinput示例：
+>>> import fileinput
+>>> for line in fileinput.input("you.md"):
+...     print line ,
+... 
+You Raise Me Up
+When I am down and, oh my soul, so weary;
+When troubles come and my heart burdened be;
+Then, I am still and wait here in the silence,
+Until you come and sit awhile with me.
+You raise me up, so I can stand on mountains;
+You raise me up, to walk on stormy seas;
+I am strong, when I am on your shoulders;
+You raise me up: To more than I can be.
+
+
+
+seek（文件中的指针，以字节为单位）
+>>> f = open("you.md")
+>>> f.readline()
+'You Raise Me Up \n'
+>>> f.readline()
+'When I am down and, oh my soul, so weary;\n'   #已经读取到第二行了
+>>> f.seek(0)      #调到文件第一行的第一个字节	
+
+
+tell（查看seek指定位置）
+>>> f.seek(4)
+>>> f.tell()
+4
+
+
+
+
+
+迭代
+
+>>> lst = ['g','i','t','h','u','b']
+>>> for i in lst:
+...     print i,
+... 
+g i t h u b
+>>> lst_iter = iter(lst)   #对原来的list实施了一个iter()
+>>> 
+>>> lst_iter.next()
+'g'
+>>> lst_iter.next()
+'i'
+>>> lst_iter.next()
+'t'
+>>> lst_iter.next()
+'h'
+>>> lst_iter.next()
+'u'
+>>> lst_iter.next()
+'b'
+>>> lst_iter.next()
+
+>>> [ line for line in open('208.txt') ]
+['Learn python with qiwsir.\n', 'There is free python course.\n', 'The website is:\n', 'http://qiwsir.github.io\n', 'Its language is Chinese.\n']
+
+>>> list(open('208.txt'))
+['Learn python with qiwsir.\n', 'There is free python course.\n', 'The website is:\n', 'http://qiwsir.github.io\n', 'Its language is Chinese.\n']
+
+>>> tuple(open('208.txt'))
+('Learn python with qiwsir.\n', 'There is free python course.\n', 'The website is:\n', 'http://qiwsir.github.io\n', 'Its language is Chinese.\n')
+
+>>> "$$$".join(open('208.txt'))
+'Learn python with qiwsir.\n$$$There is free python course.\n$$$The website is:\n$$$http://qiwsir.github.io\n$$$Its language is Chinese.\n'
+
+>>> a,b,c,d,e = open("208.txt")
+>>> a
+'Learn python with qiwsir.\n'
+>>> b
+'There is free python course.\n'
+>>> c
+'The website is:\n'
+>>> d
+'http://qiwsir.github.io\n'
+>>> e
+'Its language is Chinese.\n'
+
+
+
+函数
+函数名的命名规则要符合python中的命名要求。一般用小写字母和单下划线、数字等组合
+def是定义函数的关键词，这个简写来自英文单词define
+函数名后面是圆括号，括号里面，可以有参数列表，也可以没有参数
+千万不要忘记了括号后面的冒号
+函数体（语句块），相对于def缩进，按照python习惯，缩进四个空格
+
+>>> def name():
+...     print "lin"
+... 
+>>> name()
+lin
+>>> def add(x,y):
+...     return x+y
+... 
+>>> add(2,3)
+5
+
+
+*args(名称可以变,但"*"符合一定要存在)
+>>> def foo(x,*args):
+...     print "x:",x
+...     print "tuple:",args
+... 
+>>> 
+>>> foo(7)
+x: 7
+tuple: ()
+>>> foo(7,)
+x: 7
+tuple: ()
+
+* & ** 使用介绍
+>>> def foo(x,y,z,*args,**kargs):
+...     print x
+...     print y
+...     print z
+...     print args
+...     print kargs
+... 
+>>> 
+>>> foo('lin',2,'python')
+lin
+2
+python
+()
+{}
+>>> 
+>>> foo(1,2,3,4,5,)
+1
+2
+3
+(4, 5)
+{}
+>>> 
+>>> foo(1,2,3,4,5,name='lin')
+1
+2
+3
+(4, 5)
+{'name': 'lin'}
+
+
+
+>>> def add(x,y):
+...     return x + y
+... 
+>>> add(2,3)
+5
+>>> bars = (2,3)
+>>> add(*bars)
+5
+
+
+
+>>> def book(author,name):
+...     print "%s is writing %s" %(author,name)
+... 
+>>> bar = {"name":"Starter learning Python","author":"Kivi"}
+>>> book(**bar)
+Kivi is writing Starter learning Python
+
+
+函数综合传值方式
+
+>>> def foo(x,y=2,*targs,**dargs):
+...     print "x==>",x
+...     print "y==>",y
+...     print "targs_tuple==>",targs
+...     print "dargs_dict==>",dargs
+... 
+
+>>> foo("1x")
+x==> 1x
+y==> 2
+targs_tuple==> ()
+dargs_dict==> {}
+
+>>> foo("1x","2y")
+x==> 1x
+y==> 2y
+targs_tuple==> ()
+dargs_dict==> {}
+
+>>> foo("1x","2y","3t1","3t2")
+x==> 1x
+y==> 2y
+targs_tuple==> ('3t1', '3t2')
+dargs_dict==> {}
+
+>>> foo("1x","2y","3t1","3t2",d1="4d1",d2="4d2")
+x==> 1x
+y==> 2y
+targs_tuple==> ('3t1', '3t2')
+dargs_dict==> {'d2': '4d2', 'd1': '4d1'}
+
+
+lambda
+
+>>> lam = lambda x:x+3
+>>> n2 = []
+>>> for i in numbers:
+...     n2.append(lam(i))
+... 
+>>> n2
+[3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
+
+>>> g = lambda x,y:x+y  #x+y,并返回结果
+>>> g(3,4)
+7
+>>> (lambda x:x**2)(4)  #返回4的平方
+16
+
+
+>>> lamb = [ lambda x:x,lambda x:x**2,lambda x:x**3,lambda x:x**4 ]
+>>> for i in lamb:
+...     print i(3),
+... 
+3 9 27 81
+
+
+
+map
+map()是python的一个内置函数，它的基本样式是：map(func,seq)
+func是一个函数，seq是一个序列对象。在执行的时候，序列对象中的每个元素，按照从左到右的顺序，依次被取出来，并塞入到func那个函数里面，并将func的返回值依次存到一个list中。
+
+>>> numbers
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]      #把列表中每一项都加3
+
+>>> map(add,numbers)                #add(x)是上面讲述的那个函数，但是这里只引用函数名称即可
+[3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
+>>> map(lambda x: x+3,numbers)      #用lambda当然可以啦
+[3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
+
+>>> items = [1,2,3,4,5]
+>>> squared = []
+>>> for i in items:
+...     squared.append(i**2)
+... 
+>>> squared
+[1, 4, 9, 16, 25]
+
+>>> def sqr(x): return x**2
+... 
+>>> map(sqr,items)
+[1, 4, 9, 16, 25]
+
+>>> map(lambda x: x**2, items)
+[1, 4, 9, 16, 25]
+
+>>> [ x**2 for x in items ]     #这个我最喜欢了，一般情况下速度足够快，而且可读性强
+[1, 4, 9, 16, 25]
+
+
+>>> lst1 = [1,2,3,4,5]
+>>> lst2 = [6,7,8,9,0]
+>>> map(lambda x,y: x+y, lst1,lst2)     #将两个列表中的对应项加起来，并返回一个结果列表
+[7, 9, 11, 13, 5]
+
+
+>>> lst1 = [1,2,3,4,5]
+>>> lst2 = [6,7,8,9,0]
+>>> lst3 = [7,8,9,2,1]
+>>> map(lambda x,y,z: x+y+z, lst1,lst2,lst3)
+[14, 17, 20, 15, 6]
+
+
+
+reduce(python3需要用from functools import reduce引入)
+
+>>> reduce(lambda x,y: x+y,[1,2,3,4,5])
+15
+
+
+
+>>> a
+[3, 9, 8, 5, 2]
+>>> b
+[1, 4, 9, 2, 6]
+
+>>> zip(a,b)        #复习一下zip，下面的方法中要用到
+[(3, 1), (9, 4), (8, 9), (5, 2), (2, 6)]
+
+>>> sum(x*y for x,y in zip(a,b))    #解析后直接求和
+133
+
+>>> new_list = [x*y for x,y in zip(a,b)]    #可以看做是上面方法的分布实施
+
+>>> #这样解析也可以：new_tuple = (x*y for x,y in zip(a,b))
+>>> new_list
+[3, 36, 72, 10, 12]
+>>> sum(new_list)     #或者:sum(new_tuple)
+133
+
+>>> reduce(lambda sum,(x,y): sum+x*y,zip(a,b),0)    #这个方法是在耍酷呢吗？
+133
+
+>>> from operator import add,mul            #耍酷的方法也不止一个
+>>> reduce(add,map(mul,a,b))
+133
+
+>>> reduce(lambda x,y: x+y, map(lambda x,y: x*y, a,b))  #map,reduce,lambda都齐全了，更酷吗？
+133
+
+
+filter
+
+>>> numbers
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+>>> numbers = range(-5,5)
+>>> numbers
+[-5, -4, -3, -2, -1, 0, 1, 2, 3, 4]
+>>> 
+>>> filter(lambda x: x>0,numbers)
+[1, 2, 3, 4]
+>>> 
+>>> [x for x in numbers if x > 0]
+[1, 2, 3, 4]
+>>> filter(lambda c: c!='h', 'python')
+'pyton'
+>>> filter(lambda c: c!='h', 'pytHon')
+'pytHon'
